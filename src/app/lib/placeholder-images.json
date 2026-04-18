@@ -1,0 +1,17 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "city-masterplan",
+      "description": "Geospatial 3D map of a smart city masterplan",
+      "imageUrl": "https://picsum.photos/seed/ayma-city/1200/800",
+      "imageHint": "city map"
+    },
+    {
+      "id": "admin-avatar",
+      "description": "City Administrator profile image",
+      "imageUrl": "https://picsum.photos/seed/admin-1/100/100",
+      "imageHint": "profile person"
+    }
+  ]
+}
