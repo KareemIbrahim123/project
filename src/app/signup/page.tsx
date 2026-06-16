@@ -1,29 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { Cpu, ShieldAlert, Loader2 } from "lucide-react";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (password !== confirmPassword) {
+      return setError("SECURITY FAULT: Passwords do not match.");
+    }
+
     setIsLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       router.push("/"); // Redirect to dashboard on success
     } catch (err: any) {
-      setError("AUTHENTICATION FAILED: Invalid credentials or unauthorized access.");
+      setError(`CREATION FAILED: ${err.message || "Unable to establish new credentials."}`);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -49,16 +55,16 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background font-body relative overflow-hidden py-12">
       {/* Background styling elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background z-0" />
-      <div className="absolute w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -top-40 -left-40 z-0 animate-pulse duration-[10000ms]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/10 via-background to-background z-0" />
+      <div className="absolute w-[800px] h-[800px] bg-accent/5 rounded-full blur-3xl -top-40 -left-40 z-0 animate-pulse duration-[10000ms]" />
       
-      <div className="z-10 w-full max-w-md p-8 cyber-panel rounded-xl shadow-2xl border border-primary/20">
+      <div className="z-10 w-full max-w-md p-8 cyber-panel rounded-xl shadow-2xl border border-accent/20">
         <div className="flex flex-col items-center mb-8">
-          <div className="h-16 w-16 bg-primary/10 border border-primary/30 rounded-2xl flex items-center justify-center glow-primary mb-4">
-            <Cpu className="text-primary h-8 w-8" />
+          <div className="h-16 w-16 bg-accent/10 border border-accent/30 rounded-2xl flex items-center justify-center glow-accent mb-4">
+            <Cpu className="text-accent h-8 w-8" />
           </div>
           <h1 className="text-3xl font-bold font-headline tracking-tighter">AYMA OS</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Tier 1 Clearance Required</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Request System Clearance</p>
         </div>
 
         {error && (
@@ -68,27 +74,41 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div className="space-y-2">
+        <form onSubmit={handleSignup} className="space-y-4">
+          <div className="space-y-1">
             <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Operator ID (Email)</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors font-mono"
+              className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors font-mono"
               placeholder="admin@ayma.os"
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Access Code</label>
+          <div className="space-y-1">
+            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">New Access Code</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors font-mono tracking-widest"
+              minLength={6}
+              className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors font-mono tracking-widest"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Verify Access Code</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              minLength={6}
+              className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors font-mono tracking-widest"
               placeholder="••••••••"
             />
           </div>
@@ -96,15 +116,15 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-6 bg-primary hover:bg-primary/90 text-primary-foreground font-headline font-bold uppercase tracking-wider py-3 rounded-md transition-all flex justify-center items-center gap-2 glow-primary disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground font-headline font-bold uppercase tracking-wider py-3 rounded-md transition-all flex justify-center items-center gap-2 glow-accent disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                VERIFYING...
+                PROCESSING...
               </>
             ) : (
-              "ESTABLISH UPLINK"
+              "REGISTER CLEARANCE"
             )}
           </button>
         </form>
@@ -130,13 +150,10 @@ export default function LoginPage() {
           UPLINK VIA GOOGLE
         </button>
 
-        <div className="mt-8 text-center border-t border-border/50 pt-4 space-y-2">
-          <p className="text-[9px] text-muted-foreground font-mono">UNAUTHORIZED ACCESS IS STRICTLY PROHIBITED</p>
-          <div className="pt-2">
-            <Link href="/signup" className="text-[10px] text-primary hover:text-primary/80 font-mono transition-colors border-b border-primary/30 hover:border-primary pb-0.5">
-              REQUEST CLEARANCE (SIGN UP)
-            </Link>
-          </div>
+        <div className="mt-8 text-center border-t border-border/50 pt-4">
+          <Link href="/login" className="text-[10px] text-muted-foreground hover:text-accent font-mono transition-colors">
+            ← RETURN TO LOGIN TERMINAL
+          </Link>
         </div>
       </div>
     </div>
