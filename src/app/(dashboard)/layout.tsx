@@ -6,6 +6,7 @@ import { useAuth } from "@/components/auth/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Link from "next/link";
 
 export default function DashboardLayout({
   children,
@@ -83,7 +84,9 @@ export default function DashboardLayout({
               <span className="absolute -top-1 -right-1 h-2 w-2 bg-destructive rounded-full" />
             </div>
             <Grid className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors hidden sm:block" />
-            <User className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
+            <Link href="/profile">
+              <User className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
+            </Link>
           </div>
         </header>
 

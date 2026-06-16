@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Map as MapIcon } from "lucide-react";
+import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Map as MapIcon, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -64,6 +64,13 @@ export function Sidebar() {
               <p className="text-[9px] text-accent uppercase">Tier 1 Clearance</p>
             </div>
           </div>
+          <Link
+            href="/qa"
+            className="flex items-center justify-center gap-2 p-2 mb-2 text-[10px] font-bold font-mono text-muted-foreground hover:text-primary border border-border/50 rounded-lg hover:bg-white/5 transition-all uppercase tracking-wider"
+          >
+            <HelpCircle className="h-3 w-3" />
+            Q&A / SUPPORT
+          </Link>
           <Button 
             variant="ghost" 
             size="sm" 

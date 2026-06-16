@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { Cpu, ShieldAlert, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export default function SignupPage() {
+  const [name, setName] = useState("");
+  const [factoryName, setFactoryName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,7 +29,20 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Update Firebase Auth Profile
+      await updateProfile(user, { displayName: name });
+
+      // Save to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name,
+        factoryName,
+        email,
+        createdAt: new Date().toISOString(),
+      });
+
       router.push("/"); // Redirect to dashboard on success
     } catch (err: any) {
       setError(`CREATION FAILED: ${err.message || "Unable to establish new credentials."}`);
@@ -42,7 +58,20 @@ export default function SignupPage() {
     
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Check if user exists in Firestore, if not, create a basic record
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName || "Unknown Operator",
+          factoryName: "Unassigned Factory",
+          email: user.email,
+          createdAt: new Date().toISOString(),
+        });
+      }
+
       router.push("/");
     } catch (err: any) {
       setError(`GOOGLE UPLINK FAILED: ${err.message || "Authentication aborted."}`);
@@ -58,7 +87,7 @@ export default function SignupPage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/10 via-background to-background z-0" />
       <div className="absolute w-[800px] h-[800px] bg-accent/5 rounded-full blur-3xl -top-40 -left-40 z-0 animate-pulse duration-[10000ms]" />
       
-      <div className="z-10 w-full max-w-md p-8 cyber-panel rounded-xl shadow-2xl border border-accent/20">
+      <div className="z-10 w-full max-w-md p-8 cyber-panel rounded-xl shadow-2xl border border-accent/20 my-8">
         <div className="flex flex-col items-center mb-8">
           <div className="h-16 w-16 bg-accent/10 border border-accent/30 rounded-2xl flex items-center justify-center glow-accent mb-4">
             <Cpu className="text-accent h-8 w-8" />
@@ -75,6 +104,31 @@ export default function SignupPage() {
         )}
 
         <form onSubmit={handleSignup} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Operator Name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors font-mono"
+                placeholder="John Doe"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Factory Name</label>
+              <input
+                type="text"
+                value={factoryName}
+                onChange={(e) => setFactoryName(e.target.value)}
+                required
+                className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors font-mono"
+                placeholder="Sector 7G"
+              />
+            </div>
+          </div>
+
           <div className="space-y-1">
             <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Operator ID (Email)</label>
             <input
