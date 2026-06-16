@@ -37,9 +37,24 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# genkit
 .genkit/*
+
+# environment variables (SECRETS - never push these!)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .env*
 
 # firebase
 firebase-debug.log
 firestore-debug.log
+
+# IDX (Firebase Studio)
+.idx/
+.modified
+
+# Nested project (separate repo)
+AYMAOS/
