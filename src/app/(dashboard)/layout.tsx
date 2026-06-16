@@ -1,11 +1,34 @@
+"use client";
+
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Search, Bell, Grid, User } from "lucide-react";
+import { Search, Bell, Grid, User, Loader2 } from "lucide-react";
+import { useAuth } from "@/components/auth/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading || !user) {
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-background text-primary">
+        <Loader2 className="h-12 w-12 animate-spin mb-4" />
+        <p className="font-mono text-sm tracking-widest animate-pulse">VERIFYING CLEARANCE...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-background overflow-hidden font-body">
       <Sidebar />

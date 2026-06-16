@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const NAV_ITEMS = [
   { icon: LayoutDashboard, label: "MAIN TERMINAL", href: "/" },
@@ -62,7 +64,12 @@ export function Sidebar() {
               <p className="text-[9px] text-accent uppercase">Tier 1 Clearance</p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" className="w-full justify-start text-[9px] h-8 text-muted-foreground hover:text-destructive">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="w-full justify-start text-[9px] h-8 text-muted-foreground hover:text-destructive"
+            onClick={() => signOut(auth)}
+          >
             <LogOut className="mr-2 h-3 w-3" />
             SYSTEM LOGOUT
           </Button>
