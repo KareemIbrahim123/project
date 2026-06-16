@@ -32,7 +32,7 @@ export default function CityMappingPage() {
     : mapNodes;
 
   return (
-    <div className="p-8 space-y-8 max-w-[1600px] mx-auto">
+    <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto">
       {/* Page Header */}
       <div className="flex items-end justify-between">
         <div>

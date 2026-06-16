@@ -1,10 +1,11 @@
 "use client";
 
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Search, Bell, Grid, User, Loader2 } from "lucide-react";
+import { Search, Bell, Grid, User, Loader2, Menu } from "lucide-react";
 import { useAuth } from "@/components/auth/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function DashboardLayout({
   children,
@@ -13,12 +14,19 @@ export default function DashboardLayout({
 }) {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [user, loading, router]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   if (loading || !user) {
     return (
@@ -31,37 +39,57 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-background overflow-hidden font-body">
-      <Sidebar />
+      {/* Desktop Sidebar */}
+      <div className="hidden md:flex h-full shrink-0">
+        <Sidebar />
+      </div>
       
-      <main className="flex-1 overflow-y-auto custom-scrollbar">
+      <main className="flex-1 overflow-y-auto custom-scrollbar flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-16 border-b border-border flex items-center justify-between px-8 bg-background/50 backdrop-blur-md sticky top-0 z-50">
-          <div className="flex items-center gap-4 flex-1">
-            <div className="relative w-96 group">
+        <header className="h-16 border-b border-border flex items-center justify-between px-4 md:px-8 bg-background/50 backdrop-blur-md sticky top-0 z-50 shrink-0">
+          <div className="flex items-center gap-4 flex-1 min-w-0">
+            {/* Mobile Menu Trigger */}
+            <div className="md:hidden">
+              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <button className="p-2 -ml-2 text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-muted/50">
+                    <Menu className="h-5 w-5" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="left" className="p-0 w-64 border-r-border bg-sidebar" hideClose>
+                  <Sidebar />
+                </SheetContent>
+              </Sheet>
+            </div>
+
+            <div className="relative w-full max-w-sm hidden sm:block group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <input 
                 type="text" 
                 placeholder="EXECUTE SYSTEM SEARCH..." 
-                className="w-full bg-muted/30 border border-border/50 rounded-lg py-2 pl-10 pr-4 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-muted/50 transition-all"
+                className="w-full bg-muted/30 border border-border/50 rounded-lg py-2 pl-10 pr-4 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-muted/50 transition-all truncate"
               />
             </div>
           </div>
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6 shrink-0">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/50 bg-muted/20">
               <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-[10px] font-bold font-mono">LATENCY: 14MS</span>
+              <span className="text-[10px] font-bold font-mono hidden sm:inline-block">LATENCY: 14MS</span>
+              <span className="text-[10px] font-bold font-mono sm:hidden">14MS</span>
             </div>
             <div className="relative">
               <Bell className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
               <span className="absolute -top-1 -right-1 h-2 w-2 bg-destructive rounded-full" />
             </div>
-            <Grid className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
+            <Grid className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors hidden sm:block" />
             <User className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
           </div>
         </header>
 
-        {children}
+        <div className="flex-1 overflow-x-hidden">
+          {children}
+        </div>
       </main>
     </div>
   );
