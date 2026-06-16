@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/auth/AuthContext";
 import { updateProfile } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { User, Building, Mail, ShieldCheck, Loader2, Save } from "lucide-react";
 import Link from "next/link";
@@ -49,11 +49,11 @@ export default function ProfilePage() {
       // Update Firebase Auth
       await updateProfile(user, { displayName: name });
       
-      // Update Firestore
-      await updateDoc(doc(db, "users", user.uid), {
+      // Update or Create Firestore Document (handles users made before Firestore was added)
+      await setDoc(doc(db, "users", user.uid), {
         name,
         factoryName,
-      });
+      }, { merge: true });
 
       setMessage({ type: "success", text: "SYSTEM PROFILE UPDATED SUCCESSFULLY." });
     } catch (err: any) {
