@@ -3,6 +3,8 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthContext';
 
+import { LanguageProvider } from '@/components/LanguageContext';
+
 export const metadata: Metadata = {
   title: 'AYMA - Smart City Operating System',
   description: 'Industrial-grade autonomous energy and environmental monitoring system.',
@@ -21,9 +23,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased selection:bg-primary selection:text-primary-foreground">
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

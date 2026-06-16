@@ -6,6 +6,7 @@ import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { Cpu, ShieldAlert, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { t, language, setLanguage } = useLanguage();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,17 +50,28 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background font-body relative overflow-hidden py-12">
+      
+      {/* Language Toggle */}
+      <div className="absolute top-4 end-4 z-50">
+        <button 
+          onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+          className="bg-muted/20 border border-border/50 hover:bg-muted/40 transition-colors px-3 py-1.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-widest"
+        >
+          {language === 'en' ? 'عربي' : 'EN'}
+        </button>
+      </div>
+
       {/* Background styling elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background z-0" />
-      <div className="absolute w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -top-40 -left-40 z-0 animate-pulse duration-[10000ms]" />
+      <div className="absolute w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -top-40 -start-40 z-0 animate-pulse duration-[10000ms]" />
       
       <div className="z-10 w-full max-w-md p-8 cyber-panel rounded-xl shadow-2xl border border-primary/20">
         <div className="flex flex-col items-center mb-8">
           <div className="h-16 w-16 bg-primary/10 border border-primary/30 rounded-2xl flex items-center justify-center glow-primary mb-4">
             <Cpu className="text-primary h-8 w-8" />
           </div>
-          <h1 className="text-3xl font-bold font-headline tracking-tighter">AYMA OS</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Tier 1 Clearance Required</p>
+          <h1 className="text-3xl font-bold font-headline tracking-tighter">{t('aymaOs')}</h1>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">{t('tier1Clearance')}</p>
         </div>
 
         {error && (
@@ -70,7 +83,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Operator ID (Email)</label>
+            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">{t('operatorId')}</label>
             <input
               type="email"
               value={email}
@@ -82,7 +95,7 @@ export default function LoginPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">Access Code</label>
+            <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">{t('accessCode')}</label>
             <input
               type="password"
               value={password}
@@ -91,6 +104,11 @@ export default function LoginPage() {
               className="w-full bg-background/50 border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors font-mono tracking-widest"
               placeholder="••••••••"
             />
+            <div className="flex justify-end mt-1">
+              <Link href="/forgot-password" className="text-[10px] font-mono text-muted-foreground hover:text-primary transition-colors">
+                {t('forgotAccessCode')}
+              </Link>
+            </div>
           </div>
 
           <button
@@ -101,17 +119,17 @@ export default function LoginPage() {
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                VERIFYING...
+                {t('verifying')}
               </>
             ) : (
-              "ESTABLISH UPLINK"
+              t('establishUplink')
             )}
           </button>
         </form>
 
         <div className="my-6 flex items-center justify-center">
           <span className="w-full border-t border-border/50"></span>
-          <span className="px-3 text-[10px] font-mono text-muted-foreground bg-card">OR</span>
+          <span className="px-3 text-[10px] font-mono text-muted-foreground bg-card">{t('or')}</span>
           <span className="w-full border-t border-border/50"></span>
         </div>
 
@@ -127,14 +145,14 @@ export default function LoginPage() {
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
           </svg>
-          UPLINK VIA GOOGLE
+          {t('uplinkGoogle')}
         </button>
 
         <div className="mt-8 text-center border-t border-border/50 pt-4 space-y-2">
-          <p className="text-[9px] text-muted-foreground font-mono">UNAUTHORIZED ACCESS IS STRICTLY PROHIBITED</p>
+          <p className="text-[9px] text-muted-foreground font-mono">{t('unauthorizedAccess')}</p>
           <div className="pt-2">
             <Link href="/signup" className="text-[10px] text-primary hover:text-primary/80 font-mono transition-colors border-b border-primary/30 hover:border-primary pb-0.5">
-              REQUEST CLEARANCE (SIGN UP)
+              {t('requestClearance')}
             </Link>
           </div>
         </div>

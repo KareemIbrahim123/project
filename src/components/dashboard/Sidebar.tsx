@@ -8,26 +8,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "MAIN TERMINAL", href: "/" },
-  { icon: BarChart3, label: "ANALYTICS ENGINE", href: "/analytics" },
-  { icon: Database, label: "STORAGE VAULT", href: "/storage" },
-  { icon: MapIcon, label: "CITY MAPPING", href: "/city-mapping" },
-  { icon: Shield, label: "SECURITY AUDIT", href: "/security" },
-];
+import { useLanguage } from "@/components/LanguageContext";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { t } = useLanguage();
+
+  const NAV_ITEMS = [
+    { icon: LayoutDashboard, label: t('mainTerminal'), href: "/" },
+    { icon: BarChart3, label: t('analyticsEngine'), href: "/analytics" },
+    { icon: Database, label: t('storageVault'), href: "/storage" },
+    { icon: MapIcon, label: t('cityMapping'), href: "/city-mapping" },
+    { icon: Shield, label: t('securityAudit'), href: "/security" },
+  ];
 
   return (
-    <div className="w-64 border-r border-border bg-sidebar h-screen flex flex-col shrink-0">
+    <div className="w-64 border-e border-border bg-sidebar h-screen flex flex-col shrink-0">
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
           <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center glow-primary">
             <Cpu className="text-primary-foreground h-5 w-5" />
           </div>
-          <span className="font-bold text-xl font-headline tracking-tighter">AYMA OS</span>
+          <span className="font-bold text-xl font-headline tracking-tighter">{t('aymaOs')}</span>
         </div>
         
         <nav className="space-y-1">
@@ -61,7 +63,7 @@ export function Sidebar() {
             </Avatar>
             <div>
               <p className="text-[10px] font-bold tracking-tight">CITY ADMIN</p>
-              <p className="text-[9px] text-accent uppercase">Tier 1 Clearance</p>
+              <p className="text-[9px] text-accent uppercase">{t('tier1Clearance')}</p>
             </div>
           </div>
           <Link
@@ -69,7 +71,7 @@ export function Sidebar() {
             className="flex items-center justify-center gap-2 p-2 mb-2 text-[10px] font-bold font-mono text-muted-foreground hover:text-primary border border-border/50 rounded-lg hover:bg-white/5 transition-all uppercase tracking-wider"
           >
             <HelpCircle className="h-3 w-3" />
-            Q&A / SUPPORT
+            {t('qaSupport')}
           </Link>
           <Button 
             variant="ghost" 
@@ -77,15 +79,15 @@ export function Sidebar() {
             className="w-full justify-start text-[9px] h-8 text-muted-foreground hover:text-destructive"
             onClick={() => signOut(auth)}
           >
-            <LogOut className="mr-2 h-3 w-3" />
-            SYSTEM LOGOUT
+            <LogOut className="me-2 h-3 w-3" />
+            {t('systemLogout')}
           </Button>
         </div>
         
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-1.5">
             <div className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-[9px] text-muted-foreground font-mono">NODE_LINK: NOMINAL</span>
+            <span className="text-[9px] text-muted-foreground font-mono">{t('nodeLinkNominal')}</span>
           </div>
         </div>
       </div>
