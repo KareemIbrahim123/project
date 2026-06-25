@@ -50,7 +50,7 @@ export default function Dashboard() {
         <EnergyMonitor />
         <NetworkResilience />
         <FinancialOverview />
-      </div>
+      </motion.div>
 
       {/* Middle Row: Geospatial & Visuals */}
       <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -103,7 +103,7 @@ export default function Dashboard() {
         </div>
         
         <AlertValidationSystem />
-      </div>
+      </motion.div>
 
       {/* Bottom Row: Charts & Data */}
       <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12">
