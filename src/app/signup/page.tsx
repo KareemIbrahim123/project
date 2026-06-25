@@ -191,7 +191,7 @@ export default function SignupPage() {
                 {t('processing')}
               </>
             ) : (
-              {t('registerClearance')}
+              t('registerClearance')
             )}
           </button>
         </form>
