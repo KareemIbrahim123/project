@@ -43,7 +43,7 @@ export default function Dashboard() {
           <p className="text-[10px] text-muted-foreground uppercase mb-1">System Time (UTC)</p>
           <p className="text-xl font-mono font-bold tracking-widest">{new Date().toLocaleTimeString()}</p>
         </div>
-      </div>
+      </motion.div>
 
       {/* Top Row: Core Metrics */}
       <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
