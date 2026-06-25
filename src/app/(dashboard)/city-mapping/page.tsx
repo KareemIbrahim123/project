@@ -51,13 +51,14 @@ export default function CityMappingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Full Map View */}
         <div className="lg:col-span-3 cyber-panel relative h-[300px] md:h-[450px] lg:h-[550px] rounded-xl overflow-hidden group">
-          <div className="absolute inset-0 z-0">
-            <Image 
-              src="https://picsum.photos/seed/ayma-city-map/1400/800" 
-              alt="City Masterplan" 
-              fill 
-              className="object-cover opacity-50 group-hover:scale-[1.02] transition-transform duration-1000"
-            />
+          <div className="absolute inset-0 z-0 bg-[#000]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7286615.899145397!2d30.8768375!3d26.906099949999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14368976c35c36e9%3A0x2c45a00925c4c444!2sEgypt!5e0!3m2!1sen!2seg!4v1782396975705!5m2!1sen!2seg" 
+              className="w-full h-full border-0 opacity-80 invert hue-rotate-180 grayscale-[30%]" 
+              allowFullScreen={false} 
+              loading="lazy" 
+              referrerPolicy="strict-origin-when-cross-origin"
+            ></iframe>
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
           
