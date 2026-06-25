@@ -4,10 +4,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DollarSign, ArrowDownRight, TrendingDown } from "lucide-react";
-import { MOCK_FINANCIAL_DATA } from "@/lib/mock-data";
+import { useLiveTelemetry } from "@/hooks/useLiveTelemetry";
 
 export function FinancialOverview() {
-  const { targetCapEx, actualCapEx, reductionPercent, nodesCount } = MOCK_FINANCIAL_DATA;
+  const { financialData } = useLiveTelemetry();
+  const { targetCapEx, actualCapEx, reductionPercent, nodesCount } = financialData;
 
   return (
     <Card className="cyber-panel">

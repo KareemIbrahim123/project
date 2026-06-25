@@ -4,14 +4,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Zap, Battery, Sun, Clock } from "lucide-react";
-import { MOCK_ENERGY_DATA } from "@/lib/mock-data";
+import { useLiveTelemetry } from "@/hooks/useLiveTelemetry";
+import { motion } from "framer-motion";
 
 export function EnergyMonitor() {
-  const { batteryLevel, pvInput, targetAutonomy, currentAutonomy } = MOCK_ENERGY_DATA;
+  const { energyData } = useLiveTelemetry();
+  const { batteryLevel, pvInput, targetAutonomy, currentAutonomy } = energyData;
 
   return (
-    <Card className="cyber-panel overflow-hidden">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+    <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
+      <Card className="cyber-panel overflow-hidden h-full">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium font-headline tracking-wider flex items-center gap-2">
           <Zap className="h-4 w-4 text-primary" />
           AUTONOMOUS ENERGY
@@ -64,5 +67,6 @@ export function EnergyMonitor() {
         </div>
       </CardContent>
     </Card>
+    </motion.div>
   );
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import { EnergyMonitor } from "@/components/dashboard/EnergyMonitor";
 import { SensorDashboard } from "@/components/dashboard/SensorDashboard";
 import { NetworkResilience } from "@/components/dashboard/NetworkResilience";
@@ -5,12 +7,34 @@ import { AlertValidationSystem } from "@/components/dashboard/AlertValidationSys
 import { FinancialOverview } from "@/components/dashboard/FinancialOverview";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 export default function Dashboard() {
   return (
-    <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto">
+    <motion.div 
+      variants={container} 
+      initial="hidden" 
+      animate="show" 
+      className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto"
+    >
       {/* Welcome/Status Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
           <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">DASHBOARD_OVERVIEW_v2.4</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">TERMINAL OVERVIEW</h1>
@@ -22,14 +46,14 @@ export default function Dashboard() {
       </div>
 
       {/* Top Row: Core Metrics */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <EnergyMonitor />
         <NetworkResilience />
         <FinancialOverview />
       </div>
 
       {/* Middle Row: Geospatial & Visuals */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3 cyber-panel relative h-[250px] md:h-[350px] lg:h-[450px] rounded-xl overflow-hidden group">
           <div className="absolute inset-0 z-0">
             <Image 
@@ -82,7 +106,7 @@ export default function Dashboard() {
       </div>
 
       {/* Bottom Row: Charts & Data */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12">
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12">
         <SensorDashboard />
         <div className="cyber-panel p-6">
           <h3 className="text-sm font-medium font-headline tracking-wider flex items-center gap-2 mb-6">
@@ -104,7 +128,7 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
