@@ -67,3 +67,27 @@
   border: 1px solid hsl(var(--border));
   backdrop-filter: blur(10px);
 }
+
+/* RTL / Arabic-specific overrides */
+[dir="rtl"] .tracking-widest,
+[dir="rtl"] .tracking-wider,
+[dir="rtl"] .tracking-wide {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .uppercase {
+  text-transform: none;
+}
+
+[dir="rtl"] .font-mono {
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] .tracking-tighter {
+  letter-spacing: normal;
+}
+
+/* Custom scrollbar for RTL */
+[dir="rtl"] .custom-scrollbar {
+  direction: rtl;
+}

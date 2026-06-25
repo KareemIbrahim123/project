@@ -10,10 +10,10 @@ export default function Dashboard() {
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto">
       {/* Welcome/Status Banner */}
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
           <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">DASHBOARD_OVERVIEW_v2.4</p>
-          <h1 className="text-4xl font-bold font-headline tracking-tighter">TERMINAL OVERVIEW</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">TERMINAL OVERVIEW</h1>
         </div>
         <div className="text-right">
           <p className="text-[10px] text-muted-foreground uppercase mb-1">System Time (UTC)</p>
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       {/* Middle Row: Geospatial & Visuals */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3 cyber-panel relative h-[450px] rounded-xl overflow-hidden group">
+        <div className="lg:col-span-3 cyber-panel relative h-[250px] md:h-[350px] lg:h-[450px] rounded-xl overflow-hidden group">
           <div className="absolute inset-0 z-0">
             <Image 
               src="https://picsum.photos/seed/ayma-city/1200/800" 
@@ -42,7 +42,7 @@ export default function Dashboard() {
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
           
-          <div className="absolute top-6 left-6 z-20 space-y-2">
+          <div className="absolute top-6 start-6 z-20 space-y-2">
             <Badge className="bg-primary/80 hover:bg-primary backdrop-blur-sm border-none">GEOSPATIAL MASTERPLAN</Badge>
             <div className="p-3 cyber-panel bg-black/40 text-xs space-y-1">
               <p className="font-mono flex items-center gap-2">
@@ -60,8 +60,8 @@ export default function Dashboard() {
           <div className="absolute top-1/4 right-1/4 h-12 w-12 border-2 border-primary rounded-full animate-ping opacity-30 z-20" />
           <div className="absolute bottom-1/3 left-1/3 h-8 w-8 border-2 border-accent rounded-full animate-pulse opacity-50 z-20" />
           
-          <div className="absolute bottom-6 left-6 right-6 z-20 flex items-center justify-between">
-            <div className="flex gap-4">
+          <div className="absolute bottom-6 start-6 end-6 z-20 flex items-center justify-between">
+            <div className="flex flex-wrap gap-2 sm:gap-4">
               <div className="px-4 py-2 cyber-panel bg-black/60">
                 <p className="text-[10px] text-muted-foreground uppercase">Active Nodes</p>
                 <p className="text-xl font-bold font-headline">142/150</p>

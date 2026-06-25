@@ -25,7 +25,7 @@ export default function LoginPage() {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/"); // Redirect to dashboard on success
     } catch (err: any) {
-      setError("AUTHENTICATION FAILED: Invalid credentials or unauthorized access.");
+      setError(t('authFailed'));
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -41,7 +41,7 @@ export default function LoginPage() {
       await signInWithPopup(auth, provider);
       router.push("/");
     } catch (err: any) {
-      setError(`GOOGLE UPLINK FAILED: ${err.message || "Authentication aborted."}`);
+      setError(`${t('googleFailed')}: ${err.message || "Authentication aborted."}`);
       console.error(err);
     } finally {
       setIsLoading(false);

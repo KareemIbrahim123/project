@@ -37,10 +37,10 @@ export default function StoragePage() {
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto">
       {/* Page Header */}
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
         <div>
           <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">MODULE_STORAGE_v3.1</p>
-          <h1 className="text-4xl font-bold font-headline tracking-tighter">STORAGE VAULT</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">STORAGE VAULT</h1>
         </div>
         <Button 
           variant="outline" 

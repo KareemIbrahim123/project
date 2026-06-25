@@ -19,7 +19,7 @@ export function EnergyMonitor() {
         <span className="text-[10px] text-accent animate-pulse">LIVE MONITOR</span>
       </CardHeader>
       <CardContent className="pt-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-4">
             <div className="flex items-end gap-2">
               <span className="text-4xl font-bold font-headline">{batteryLevel}%</span>

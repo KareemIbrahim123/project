@@ -70,7 +70,7 @@ export function SensorDashboard() {
           </ChartContainer>
         </div>
         
-        <div className="grid grid-cols-4 gap-4 mt-6 border-t border-border pt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 border-t border-border pt-6">
           <div className="text-center">
             <Thermometer className="h-4 w-4 mx-auto mb-2 text-primary" />
             <p className="text-xs text-muted-foreground">TEMP</p>

@@ -106,7 +106,7 @@ export default function SignupPage() {
             <Cpu className="text-accent h-8 w-8" />
           </div>
           <h1 className="text-3xl font-bold font-headline tracking-tighter">{t('aymaOs')}</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Request System Clearance</p>
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">{t('requestSystemClearance')}</p>
         </div>
 
         {error && (
@@ -117,7 +117,7 @@ export default function SignupPage() {
         )}
 
         <form onSubmit={handleSignup} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-[10px] font-headline tracking-wider text-muted-foreground uppercase">{t('operatorName')}</label>
               <input
@@ -191,7 +191,7 @@ export default function SignupPage() {
                 {t('processing')}
               </>
             ) : (
-              "REGISTER CLEARANCE"
+              {t('registerClearance')}
             )}
           </button>
         </form>

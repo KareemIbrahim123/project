@@ -44,10 +44,10 @@ export default function AnalyticsPage() {
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto">
       {/* Page Header */}
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-2">
         <div>
           <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">MODULE_ANALYTICS_v1.2</p>
-          <h1 className="text-4xl font-bold font-headline tracking-tighter">ANALYTICS ENGINE</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">ANALYTICS ENGINE</h1>
         </div>
         <div className="flex items-center gap-3">
           <Badge variant="outline" className="border-accent/30 text-accent">
@@ -91,7 +91,7 @@ export default function AnalyticsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[200px] md:h-[300px]">
               <ChartContainer config={tempChartConfig}>
                 <AreaChart data={sensorData}>
                   <defs>
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[200px] md:h-[300px]">
               <ChartContainer config={energyChartConfig}>
                 <LineChart data={energyHistory}>
                   <XAxis dataKey="hour" tick={{ fontSize: 10 }} />

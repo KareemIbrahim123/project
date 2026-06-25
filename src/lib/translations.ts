@@ -48,6 +48,13 @@ export const translations: Translations = {
 
     // General
     aymaOs: "AYMA OS",
+    cityAdmin: "CITY ADMIN",
+    registerClearance: "REGISTER CLEARANCE",
+    requestSystemClearance: "Request System Clearance",
+    authFailed: "AUTHENTICATION FAILED: Invalid credentials or unauthorized access.",
+    googleFailed: "GOOGLE UPLINK FAILED",
+    passwordMismatch: "ACCESS CODES DO NOT MATCH",
+    registrationFailed: "REGISTRATION FAILED",
   },
   ar: {
     // Auth Pages
@@ -90,5 +97,12 @@ export const translations: Translations = {
 
     // General
     aymaOs: "نظام أيما",
+    cityAdmin: "مدير المدينة",
+    registerClearance: "تسجيل التصريح",
+    requestSystemClearance: "طلب تصريح النظام",
+    authFailed: "فشل المصادقة: بيانات غير صالحة أو وصول غير مصرح به.",
+    googleFailed: "فشل الاتصال عبر جوجل",
+    passwordMismatch: "رموز الوصول غير متطابقة",
+    registrationFailed: "فشل التسجيل",
   }
 };

@@ -53,10 +53,10 @@ export default function SecurityPage() {
   return (
     <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-[1600px] mx-auto">
       {/* Page Header */}
-      <div className="flex items-end justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
           <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">MODULE_SECURITY_v4.0</p>
-          <h1 className="text-4xl font-bold font-headline tracking-tighter">SECURITY AUDIT</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">SECURITY AUDIT</h1>
         </div>
         <div className="flex items-center gap-3">
           <Badge variant="outline" className="border-destructive/30 text-destructive animate-pulse">

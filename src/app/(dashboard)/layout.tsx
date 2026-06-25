@@ -49,8 +49,8 @@ export default function DashboardLayout({
       
       <main className="flex-1 overflow-y-auto custom-scrollbar flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-16 border-b border-border flex items-center justify-between px-4 md:px-8 bg-background/50 backdrop-blur-md sticky top-0 z-50 shrink-0">
-          <div className="flex items-center gap-4 flex-1 min-w-0">
+        <header className="h-14 sm:h-16 border-b border-border flex items-center justify-between px-3 sm:px-4 md:px-8 bg-background/50 backdrop-blur-md sticky top-0 z-50 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
             {/* Mobile Menu Trigger */}
             <div className="md:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -75,10 +75,10 @@ export default function DashboardLayout({
             </div>
           </div>
           
-          <div className="flex items-center gap-4 md:gap-6 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-6 shrink-0">
             <button 
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-              className="bg-muted/20 border border-border/50 hover:bg-muted/40 transition-colors px-3 py-1.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-widest hidden sm:block"
+              className="bg-muted/20 border border-border/50 hover:bg-muted/40 transition-colors px-2 sm:px-3 py-1 sm:py-1.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-widest"
             >
               {language === 'en' ? 'عربي' : 'EN'}
             </button>

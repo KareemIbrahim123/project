@@ -62,7 +62,7 @@ export function Sidebar() {
               <AvatarFallback>AD</AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-[10px] font-bold tracking-tight">CITY ADMIN</p>
+              <p className="text-[10px] font-bold tracking-tight">{t('cityAdmin')}</p>
               <p className="text-[9px] text-accent uppercase">{t('tier1Clearance')}</p>
             </div>
           </div>

@@ -37,7 +37,7 @@ export default function CityMappingPage() {
       <div className="flex items-end justify-between">
         <div>
           <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">MODULE_GEOSPATIAL_v2.0</p>
-          <h1 className="text-4xl font-bold font-headline tracking-tighter">CITY MAPPING</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">CITY MAPPING</h1>
         </div>
         <div className="flex items-center gap-3">
           <Badge variant="outline" className="border-accent/30 text-accent">
@@ -50,7 +50,7 @@ export default function CityMappingPage() {
       {/* Map + Controls */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Full Map View */}
-        <div className="lg:col-span-3 cyber-panel relative h-[550px] rounded-xl overflow-hidden group">
+        <div className="lg:col-span-3 cyber-panel relative h-[300px] md:h-[450px] lg:h-[550px] rounded-xl overflow-hidden group">
           <div className="absolute inset-0 z-0">
             <Image 
               src="https://picsum.photos/seed/ayma-city-map/1400/800" 
@@ -62,30 +62,30 @@ export default function CityMappingPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
           
           {/* Map overlay markers */}
-          <div className="absolute top-[15%] left-[20%] z-20">
+          <div className="absolute top-[15%] start-[20%] z-20">
             <div className="h-4 w-4 rounded-full bg-primary animate-pulse border-2 border-primary/50" />
             <span className="text-[8px] font-mono text-primary ml-1">ALPHA</span>
           </div>
-          <div className="absolute top-[35%] left-[45%] z-20">
+          <div className="absolute top-[35%] start-[45%] z-20">
             <div className="h-4 w-4 rounded-full bg-accent animate-pulse border-2 border-accent/50" />
             <span className="text-[8px] font-mono text-accent ml-1">BETA</span>
           </div>
-          <div className="absolute top-[55%] right-[25%] z-20">
+          <div className="absolute top-[55%] end-[25%] z-20">
             <div className="h-4 w-4 rounded-full bg-primary animate-pulse border-2 border-primary/50" />
             <span className="text-[8px] font-mono text-primary ml-1">GAMMA</span>
           </div>
-          <div className="absolute bottom-[25%] left-[30%] z-20">
+          <div className="absolute bottom-[25%] start-[30%] z-20">
             <div className="h-4 w-4 rounded-full bg-warning animate-pulse border-2 border-warning/50" />
             <span className="text-[8px] font-mono text-warning ml-1">DELTA</span>
           </div>
           
           {/* Pinging circles */}
-          <div className="absolute top-[20%] left-[60%] h-16 w-16 border-2 border-primary/30 rounded-full animate-ping z-15 opacity-20" />
-          <div className="absolute bottom-[40%] right-[40%] h-10 w-10 border-2 border-accent/30 rounded-full animate-ping z-15 opacity-20" />
+          <div className="absolute top-[20%] start-[60%] h-16 w-16 border-2 border-primary/30 rounded-full animate-ping z-15 opacity-20" />
+          <div className="absolute bottom-[40%] end-[40%] h-10 w-10 border-2 border-accent/30 rounded-full animate-ping z-15 opacity-20" />
           
           {/* Bottom overlay */}
-          <div className="absolute bottom-6 left-6 right-6 z-20 flex items-center justify-between">
-            <div className="flex gap-3">
+          <div className="absolute bottom-6 start-6 end-6 z-20 flex items-center justify-between">
+            <div className="flex flex-wrap gap-3">
               {sectors.map((s) => (
                 <button
                   key={s.name}
@@ -102,7 +102,7 @@ export default function CityMappingPage() {
           </div>
 
           {/* Top left coordinates */}
-          <div className="absolute top-6 left-6 z-20">
+          <div className="absolute top-6 start-6 z-20">
             <Badge className="bg-primary/80 hover:bg-primary backdrop-blur-sm border-none mb-2">LIVE SATELLITE VIEW</Badge>
             <div className="p-3 cyber-panel bg-black/50 text-xs space-y-1">
               <p className="font-mono flex items-center gap-2">
