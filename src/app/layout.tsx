@@ -8,6 +8,9 @@ import { LanguageProvider } from '@/components/LanguageContext';
 export const metadata: Metadata = {
   title: 'AYMA - Smart City Operating System',
   description: 'Industrial-grade autonomous energy and environmental monitoring system.',
+  icons: {
+    icon: '/icon.jpg',
+  },
 };
 
 export default function RootLayout({
