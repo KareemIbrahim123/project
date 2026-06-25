@@ -3,6 +3,8 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthContext';
 import { LanguageProvider } from '@/components/LanguageContext';
+import { SettingsProvider } from '@/components/SettingsContext';
+import { CyberToastProvider } from '@/components/CyberToast';
 import Script from 'next/script';
 
 export const viewport: Viewport = {
@@ -32,9 +34,13 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased selection:bg-primary selection:text-primary-foreground">
         <LanguageProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <SettingsProvider>
+            <CyberToastProvider>
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+            </CyberToastProvider>
+          </SettingsProvider>
         </LanguageProvider>
         <Script id="chatbase-init" strategy="afterInteractive" dangerouslySetInnerHTML={{
           __html: `

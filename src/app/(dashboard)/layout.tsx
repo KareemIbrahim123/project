@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageContext";
+import { GlobalToastEmitter } from "@/components/dashboard/GlobalToastEmitter";
 
 export default function DashboardLayout({
   children,
@@ -102,6 +103,7 @@ export default function DashboardLayout({
         <div className="flex-1 overflow-x-hidden">
           {children}
         </div>
+        <GlobalToastEmitter />
       </main>
     </div>
   );
