@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Factory, HelpCircle, PieChart } from "lucide-react";
+import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Factory, HelpCircle, PieChart, Sliders } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -9,16 +9,19 @@ import { usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useLanguage } from "@/components/LanguageContext";
+import { useCyberToast } from "@/components/CyberToast";
 
 export function Sidebar() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const toast = useCyberToast();
 
   const NAV_ITEMS = [
     { icon: LayoutDashboard, label: t('mainTerminal'), href: "/" },
     { icon: BarChart3, label: t('analyticsEngine'), href: "/analytics" },
     { icon: Database, label: t('storageVault'), href: "/storage" },
     { icon: Factory, label: t('plantFloor'), href: "/plant-floor" },
+    { icon: Sliders, label: t('controlPanel'), href: "/control-panel" },
     { icon: PieChart, label: t('factoryStatistics'), href: "/statistics" },
     { icon: Shield, label: t('securityAudit'), href: "/security" },
   ];
@@ -67,13 +70,13 @@ export function Sidebar() {
               <p className="text-[9px] text-accent uppercase">{t('tier1Clearance')}</p>
             </div>
           </div>
-          <Link
-            href="/qa"
-            className="flex items-center justify-center gap-2 p-2 mb-2 text-[10px] font-bold font-mono text-muted-foreground hover:text-primary border border-border/50 rounded-lg hover:bg-white/5 transition-all uppercase tracking-wider"
+          <button
+            onClick={() => toast("Uplink initialized. Please use the support AI terminal in the bottom right.", "info")}
+            className="w-full flex items-center justify-center gap-2 p-2 mb-2 text-[10px] font-bold font-mono text-muted-foreground hover:text-primary border border-border/50 rounded-lg hover:bg-white/5 transition-all uppercase tracking-wider"
           >
             <HelpCircle className="h-3 w-3" />
             {t('qaSupport')}
-          </Link>
+          </button>
           <Button 
             variant="ghost" 
             size="sm" 

@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageContext";
 import { GlobalToastEmitter } from "@/components/dashboard/GlobalToastEmitter";
+import { useCyberToast } from "@/components/CyberToast";
 
 export default function DashboardLayout({
   children,
@@ -20,6 +21,14 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t, language, setLanguage } = useLanguage();
+  const toast = useCyberToast();
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      toast(`Executing global system search for: ${(e.target as HTMLInputElement).value}`, 'info');
+      (e.target as HTMLInputElement).value = '';
+    }
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -71,6 +80,7 @@ export default function DashboardLayout({
               <input 
                 type="text" 
                 placeholder={t('executeSearch')} 
+                onKeyDown={handleSearch}
                 className="w-full bg-muted/30 border border-border/50 rounded-lg py-2 ps-10 pe-4 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-muted/50 transition-all truncate"
               />
             </div>
@@ -89,11 +99,14 @@ export default function DashboardLayout({
               <span className="text-[10px] font-bold font-mono hidden sm:inline-block">{t('latency')}</span>
               <span className="text-[10px] font-bold font-mono sm:hidden">14MS</span>
             </div>
-            <div className="relative">
+            <div className="relative" onClick={() => toast("No critical alerts in queue.", "success")}>
               <Bell className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
-              <span className="absolute -top-1 -end-1 h-2 w-2 bg-destructive rounded-full" />
+              <span className="absolute -top-1 -end-1 h-2 w-2 bg-destructive rounded-full animate-pulse" />
             </div>
-            <Grid className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors hidden sm:block" />
+            <Grid 
+              onClick={() => toast("Module grid reconfiguration locked by Administrator.", "warning")}
+              className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors hidden sm:block" 
+            />
             <Link href="/profile">
               <User className="h-5 w-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
             </Link>

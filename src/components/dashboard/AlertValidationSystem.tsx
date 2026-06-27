@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { BrainCircuit, AlertCircle, CheckCircle2, ShieldCheck, Loader2 } from "lucide-react";
 import { aymaAlertValidation, type AlertValidationOutput } from "@/ai/flows/ayma-alert-validation";
+import { useCyberToast } from "@/components/CyberToast";
 
 type Alert = {
   id: string;
@@ -41,6 +42,12 @@ const INITIAL_ALERTS: Alert[] = [
 
 export function AlertValidationSystem() {
   const [alerts, setAlerts] = useState<Alert[]>(INITIAL_ALERTS);
+  const toast = useCyberToast();
+
+  const handleAcknowledge = (id: string) => {
+    setAlerts(prev => prev.map(a => a.id === id ? { ...a, acknowledged: true } : a));
+    toast(`Alert ${id} acknowledged and logged by operator.`, "success");
+  };
 
   useEffect(() => {
     const validateAlerts = async () => {
@@ -115,6 +122,20 @@ export function AlertValidationSystem() {
                       <span>CONFIDENCE</span>
                       <span>{(alert.validation.confidenceScore * 100).toFixed(0)}%</span>
                     </div>
+                  </div>
+                )}
+                {alert.validation?.isValidAlert && !alert.acknowledged && (
+                  <button 
+                    onClick={() => handleAcknowledge(alert.id)}
+                    className="mt-3 w-full py-1.5 rounded bg-destructive/20 hover:bg-destructive/40 border border-destructive/50 text-destructive text-[10px] font-bold font-mono tracking-widest transition-colors"
+                  >
+                    ACKNOWLEDGE
+                  </button>
+                )}
+                {alert.acknowledged && (
+                  <div className="mt-3 text-[10px] font-mono text-muted-foreground flex items-center gap-1">
+                    <CheckCircle2 className="h-3 w-3 text-accent" />
+                    Acknowledged by Operator
                   </div>
                 )}
               </div>
