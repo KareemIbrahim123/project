@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Factory, HelpCircle } from "lucide-react";
+import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Factory, HelpCircle, PieChart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ export function Sidebar() {
     { icon: BarChart3, label: t('analyticsEngine'), href: "/analytics" },
     { icon: Database, label: t('storageVault'), href: "/storage" },
     { icon: Factory, label: t('plantFloor'), href: "/plant-floor" },
+    { icon: PieChart, label: t('factoryStatistics'), href: "/statistics" },
     { icon: Shield, label: t('securityAudit'), href: "/security" },
   ];
 
