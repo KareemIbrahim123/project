@@ -3,8 +3,10 @@
 import { MachineControls } from "@/components/dashboard/MachineControls";
 import { EnvironmentControls } from "@/components/dashboard/EnvironmentControls";
 import { EmergencyStop } from "@/components/dashboard/EmergencyStop";
+import { DoorControls } from "@/components/dashboard/DoorControls";
 import { motion } from "framer-motion";
-import { ShieldAlert } from "lucide-react";
+import { ShieldAlert, Layers } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const container = {
   hidden: { opacity: 0 },
@@ -40,17 +42,45 @@ export default function ControlPanelPage() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <motion.div variants={item} className="lg:col-span-2">
-          <MachineControls />
+      <Tabs defaultValue="floor1" className="w-full space-y-6">
+        <motion.div variants={item} className="flex items-center justify-between border-b border-border/50 pb-4">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Layers className="h-5 w-5" />
+            <span className="text-sm font-bold font-headline tracking-widest">SECTOR SELECT:</span>
+          </div>
+          <TabsList className="bg-muted/20 border border-border/50">
+            <TabsTrigger value="floor1" className="text-xs font-bold tracking-widest data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:border-primary/50 border border-transparent transition-all">
+              FLOOR 1 (HEAVY)
+            </TabsTrigger>
+            <TabsTrigger value="floor2" className="text-xs font-bold tracking-widest data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:border-primary/50 border border-transparent transition-all">
+              FLOOR 2 (ASSEMBLY)
+            </TabsTrigger>
+            <TabsTrigger value="floor3" className="text-xs font-bold tracking-widest data-[state=active]:bg-primary/20 data-[state=active]:text-primary data-[state=active]:border-primary/50 border border-transparent transition-all">
+              FLOOR 3 (SERVERS)
+            </TabsTrigger>
+          </TabsList>
         </motion.div>
-        
-        <motion.div variants={item} className="col-span-1">
-          <EnvironmentControls />
-        </motion.div>
-      </div>
 
-      <motion.div variants={item}>
+        {[1, 2, 3].map((floor) => (
+          <TabsContent key={floor} value={`floor${floor}`} className="space-y-6 mt-0">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <motion.div variants={item} className="lg:col-span-2">
+                <MachineControls floor={floor as 1 | 2 | 3} />
+              </motion.div>
+              
+              <motion.div variants={item} className="col-span-1">
+                <EnvironmentControls floor={floor as 1 | 2 | 3} />
+              </motion.div>
+            </div>
+            
+            <motion.div variants={item}>
+              <DoorControls floor={floor as 1 | 2 | 3} />
+            </motion.div>
+          </TabsContent>
+        ))}
+      </Tabs>
+
+      <motion.div variants={item} className="pt-12 border-t border-border/30">
         <EmergencyStop />
       </motion.div>
       

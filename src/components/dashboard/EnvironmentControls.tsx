@@ -1,21 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Thermometer, Wind, RefreshCcw } from "lucide-react";
 import { useCyberToast } from "@/components/CyberToast";
 
-const INITIAL_ZONES = [
-  { id: "Z1", name: "Assembly Line A", temp: 22, humidity: 45 },
-  { id: "Z2", name: "Server Vault", temp: 18, humidity: 40 },
-  { id: "Z3", name: "Chemical Storage", temp: 15, humidity: 30 },
-];
+const ZONES_BY_FLOOR = {
+  1: [
+    { id: "Z1-1", name: "Heavy Machining Zone", temp: 18, humidity: 35 },
+    { id: "Z1-2", name: "Loading Dock", temp: 24, humidity: 50 },
+  ],
+  2: [
+    { id: "Z2-1", name: "Assembly Line A", temp: 22, humidity: 45 },
+    { id: "Z2-2", name: "Chemical Storage", temp: 15, humidity: 30 },
+  ],
+  3: [
+    { id: "Z3-1", name: "Server Vault Alpha", temp: 16, humidity: 40 },
+    { id: "Z3-2", name: "Control Room", temp: 21, humidity: 45 },
+  ]
+};
 
-export function EnvironmentControls() {
-  const [zones, setZones] = useState(INITIAL_ZONES);
+export function EnvironmentControls({ floor }: { floor: 1 | 2 | 3 }) {
+  const [zones, setZones] = useState(ZONES_BY_FLOOR[floor]);
   const [isSyncing, setIsSyncing] = useState(false);
   const toast = useCyberToast();
+
+  useEffect(() => {
+    setZones(ZONES_BY_FLOOR[floor]);
+  }, [floor]);
 
   const handleTempChange = (id: string, newTemp: number[]) => {
     setZones(prev => prev.map(z => z.id === id ? { ...z, temp: newTemp[0] } : z));
@@ -30,6 +43,8 @@ export function EnvironmentControls() {
       toast("Environmental controls successfully synchronized.", "success");
     }, 2000);
   };
+
+  if (zones.length === 0) return null;
 
   return (
     <Card className="cyber-panel h-full flex flex-col">

@@ -1,26 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Play, Square, RotateCcw, Cpu } from "lucide-react";
 import { useCyberToast } from "@/components/CyberToast";
 
-const INITIAL_MACHINES = [
-  { id: "M01", name: "CNC Mill Alpha", status: "running", uptime: "98.2%" },
-  { id: "M02", name: "Packaging Robot B", status: "stopped", uptime: "95.5%" },
-  { id: "M03", name: "Conveyor Line 1", status: "running", uptime: "99.1%" },
-  { id: "M04", name: "Hydraulic Press", status: "fault", uptime: "82.4%" },
-];
+const MACHINES_BY_FLOOR = {
+  1: [
+    { id: "M01", name: "CNC Mill Alpha", status: "running", uptime: "98.2%" },
+    { id: "M04", name: "Hydraulic Press", status: "fault", uptime: "82.4%" },
+    { id: "M05", name: "Heavy Lathe Unit", status: "stopped", uptime: "91.0%" },
+  ],
+  2: [
+    { id: "M02", name: "Packaging Robot B", status: "stopped", uptime: "95.5%" },
+    { id: "M03", name: "Conveyor Line 1", status: "running", uptime: "99.1%" },
+    { id: "M06", name: "Assembly Arm C", status: "running", uptime: "96.4%" },
+  ],
+  3: [
+    { id: "M07", name: "Backup Generator A", status: "stopped", uptime: "100%" },
+    { id: "M08", name: "Backup Generator B", status: "stopped", uptime: "100%" },
+  ]
+};
 
-export function MachineControls() {
-  const [machines, setMachines] = useState(INITIAL_MACHINES);
+export function MachineControls({ floor }: { floor: 1 | 2 | 3 }) {
+  const [machines, setMachines] = useState(MACHINES_BY_FLOOR[floor]);
   const toast = useCyberToast();
+
+  useEffect(() => {
+    setMachines(MACHINES_BY_FLOOR[floor]);
+  }, [floor]);
 
   const handleAction = (id: string, action: "start" | "stop" | "reset") => {
     toast(`Command '${action.toUpperCase()}' sent to Machine ${id}. Awaiting telemetry response...`, "info");
     
-    // Simulate delayed state change
     setTimeout(() => {
       setMachines(prev => prev.map(m => {
         if (m.id === id) {
@@ -34,6 +47,8 @@ export function MachineControls() {
     }, 1500);
   };
 
+  if (machines.length === 0) return null;
+
   return (
     <Card className="cyber-panel h-full">
       <CardHeader className="pb-4 border-b border-border/30">
@@ -43,7 +58,7 @@ export function MachineControls() {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/30">
+        <div className="grid grid-cols-1 xl:grid-cols-2 divide-y xl:divide-y-0 xl:divide-x divide-border/30">
           {machines.map((machine) => (
             <div key={machine.id} className="p-4 sm:p-6 hover:bg-white/5 transition-colors">
               <div className="flex items-start justify-between mb-4">
