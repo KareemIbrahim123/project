@@ -82,5 +82,5 @@ export function useCyberToast() {
   if (context === undefined) {
     throw new Error("useCyberToast must be used within a CyberToastProvider");
   }
-  return context;
+  return context.addToast;
 }
