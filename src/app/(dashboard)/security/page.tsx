@@ -12,7 +12,7 @@ const securityAlerts = [
   { id: 3, time: "10:22:01", severity: "info", title: "Routine key rotation completed - Vault cluster", description: "256-bit AES keys successfully rotated across all 8 vault nodes. Zero downtime achieved.", status: "resolved" },
   { id: 4, time: "09:55:44", severity: "critical", title: "Anomalous traffic pattern - Li-Fi mesh segment", description: "348% spike in data transmission on LIFI-MESH-03. Pattern does not match known operational profiles.", status: "investigating" },
   { id: 5, time: "09:41:33", severity: "warning", title: "Firmware version mismatch - 3 sensor nodes", description: "Nodes N-037, N-041, N-078 running firmware v2.1.3 (latest: v2.2.0). Security patches pending.", status: "acknowledged" },
-  { id: 6, time: "09:12:18", severity: "info", title: "Admin session started - CITY ADMIN (Tier 1)", description: "Successful authentication via 2FA. Session token issued for 8-hour window.", status: "resolved" },
+  { id: 6, time: "09:12:18", severity: "info", title: "Admin session started - PLANT OPERATOR (Tier 1)", description: "Successful authentication via 2FA. Session token issued for 8-hour window.", status: "resolved" },
   { id: 7, time: "08:58:07", severity: "warning", title: "Backup integrity check failed - Archive node", description: "CRC mismatch on 2 of 847 backup blocks in VAULT-007. Re-sync initiated.", status: "investigating" },
   { id: 8, time: "08:30:00", severity: "info", title: "Daily security scan completed", description: "Full infrastructure scan complete. 0 critical, 3 warnings, 142 nodes healthy.", status: "resolved" },
 ];
@@ -34,7 +34,7 @@ const auditLog = [
   { time: "10:22:01", user: "AUTO-ROTATE", action: "KEY_ROTATE", target: "vault-cluster/*", result: "SUCCESS" },
   { time: "09:55:44", user: "IDS", action: "FLAG_ANOMALY", target: "LIFI-MESH-03", result: "INVESTIGATING" },
   { time: "09:41:33", user: "SYSTEM", action: "FW_CHECK", target: "N-037,N-041,N-078", result: "OUTDATED" },
-  { time: "09:12:18", user: "CITY ADMIN", action: "LOGIN", target: "dashboard.ayma.os", result: "GRANTED" },
+  { time: "09:12:18", user: "PLANT OPR", action: "LOGIN", target: "dashboard.ayma.os", result: "GRANTED" },
   { time: "08:58:07", user: "SYSTEM", action: "BACKUP_CRC", target: "VAULT-007", result: "MISMATCH" },
   { time: "08:30:00", user: "SCANNER", action: "FULL_SCAN", target: "infrastructure/*", result: "CLEAN" },
 ];
@@ -109,7 +109,7 @@ export default function SecurityPage() {
               <span className="text-[9px] text-muted-foreground uppercase">ACTIVE SESSIONS</span>
             </div>
             <p className="text-2xl font-bold font-headline">1</p>
-            <p className="text-[10px] text-primary mt-1">CITY ADMIN (TIER 1)</p>
+            <p className="text-[10px] text-primary mt-1">PLANT OPERATOR (TIER 1)</p>
           </CardContent>
         </Card>
       </div>

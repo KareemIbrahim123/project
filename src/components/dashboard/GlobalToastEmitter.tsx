@@ -5,11 +5,11 @@ import { useSettings } from "@/components/SettingsContext";
 import { useCyberToast } from "@/components/CyberToast";
 
 const MOCK_MESSAGES = [
-  { msg: "Anomaly detected in Node-4A. Adjusting power routing.", type: "warning" as const },
-  { msg: "Grid health stabilized at 99.8%.", type: "info" as const },
-  { msg: "LIFI MESH connection restored to sector 7.", type: "info" as const },
-  { msg: "WARNING: Unexpected thermal spike in sector 2.", type: "error" as const },
-  { msg: "Telemetry sync completed successfully.", type: "info" as const },
+  { msg: "Vibration anomaly detected on CNC Mill-01 spindle bearing.", type: "warning" as const },
+  { msg: "OEE stabilized at 84.2% across all production lines.", type: "info" as const },
+  { msg: "Conveyor Line A resumed operation after maintenance.", type: "info" as const },
+  { msg: "WARNING: Thermal spike on Packaging Robot servo motor.", type: "error" as const },
+  { msg: "Shift handover telemetry sync completed.", type: "info" as const },
 ];
 
 export function GlobalToastEmitter() {

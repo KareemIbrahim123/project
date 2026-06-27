@@ -50,7 +50,7 @@ const alertValidationPrompt = ai.definePrompt({
   name: 'alertValidationPrompt',
   input: { schema: AlertValidationInputSchema },
   output: { schema: AlertValidationOutputSchema },
-  prompt: `You are an AI-powered fusion algorithm designed to validate and filter out false alarms for a Smart City Operating System (AYMA).
+  prompt: `You are an AI-powered fusion algorithm designed to validate and filter out false alarms for an Industrial Factory Operating System (AYMA).
 Your primary goal is to identify critical and actionable alerts, aiming to filter out approximately 95% of false alarms.
 Analyze the provided alert description, sensor readings, energy status, and network status.
 Determine if the alert is genuinely critical and requires immediate attention, or if it is likely a false alarm based on the context.

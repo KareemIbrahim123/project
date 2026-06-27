@@ -35,7 +35,7 @@ export const translations: Translations = {
     mainTerminal: "MAIN TERMINAL",
     analyticsEngine: "ANALYTICS ENGINE",
     storageVault: "STORAGE VAULT",
-    cityMapping: "CITY MAPPING",
+    plantFloor: "PLANT FLOOR",
     securityAudit: "SECURITY AUDIT",
     qaSupport: "Q&A / SUPPORT",
     systemLogout: "SYSTEM LOGOUT",
@@ -48,7 +48,7 @@ export const translations: Translations = {
 
     // General
     aymaOs: "AYMA OS",
-    cityAdmin: "CITY ADMIN",
+    plantOperator: "PLANT OPERATOR",
     registerClearance: "REGISTER CLEARANCE",
     requestSystemClearance: "Request System Clearance",
     authFailed: "AUTHENTICATION FAILED: Invalid credentials or unauthorized access.",
@@ -84,7 +84,7 @@ export const translations: Translations = {
     mainTerminal: "المحطة الرئيسية",
     analyticsEngine: "محرك التحليلات",
     storageVault: "خزنة البيانات",
-    cityMapping: "تخطيط المدينة",
+    plantFloor: "أرضية المصنع",
     securityAudit: "التدقيق الأمني",
     qaSupport: "الدعم والأسئلة الشائعة",
     systemLogout: "تسجيل الخروج من النظام",
@@ -97,7 +97,7 @@ export const translations: Translations = {
 
     // General
     aymaOs: "نظام أيما",
-    cityAdmin: "مدير المدينة",
+    plantOperator: "مشغل المصنع",
     registerClearance: "تسجيل التصريح",
     requestSystemClearance: "طلب تصريح النظام",
     authFailed: "فشل المصادقة: بيانات غير صالحة أو وصول غير مصرح به.",

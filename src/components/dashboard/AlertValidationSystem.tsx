@@ -12,25 +12,30 @@ type Alert = {
   id: string;
   time: string;
   description: string;
+  category?: string;
   validation?: AlertValidationOutput;
   isLoading?: boolean;
+  acknowledged?: boolean;
 };
 
 const INITIAL_ALERTS: Alert[] = [
   {
     id: "1",
     time: "14:22",
-    description: "Abnormal temperature spike detected in Sector 4 energy storage unit.",
+    description: "Abnormal temperature spike detected in CNC Mill-01 spindle motor.",
+    category: "Equipment",
   },
   {
     id: "2",
     time: "13:45",
-    description: "Sudden pressure drop in main gas conduit near Node-12.",
+    description: "Sudden pressure drop in hydraulic press main cylinder.",
+    category: "Process",
   },
   {
     id: "3",
     time: "12:10",
-    description: "Multiple motion triggers detected in unauthorized maintenance area.",
+    description: "Multiple motion triggers detected in restricted maintenance bay.",
+    category: "Safety",
   }
 ];
 
@@ -96,6 +101,9 @@ export function AlertValidationSystem() {
                   )}
                 </div>
                 <p className="text-xs font-medium leading-relaxed mb-2">{alert.description}</p>
+                {alert.category && (
+                  <Badge variant="outline" className="text-[8px] border-primary/30 text-primary mb-2">{alert.category.toUpperCase()}</Badge>
+                )}
                 {alert.validation && (
                   <div className={`mt-2 p-2 rounded text-[10px] ${alert.validation.isValidAlert ? 'bg-destructive/10 text-destructive border border-destructive/20' : 'bg-accent/10 text-accent border border-accent/20'}`}>
                     <p className="font-bold flex items-center gap-1">

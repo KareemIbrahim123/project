@@ -5,8 +5,10 @@ import { SensorDashboard } from "@/components/dashboard/SensorDashboard";
 import { NetworkResilience } from "@/components/dashboard/NetworkResilience";
 import { AlertValidationSystem } from "@/components/dashboard/AlertValidationSystem";
 import { FinancialOverview } from "@/components/dashboard/FinancialOverview";
+import { EquipmentHealth } from "@/components/dashboard/EquipmentHealth";
+import { ProductionLines } from "@/components/dashboard/ProductionLines";
+import { OEEGauge } from "@/components/dashboard/OEEGauge";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const container = {
@@ -36,8 +38,8 @@ export default function Dashboard() {
       {/* Welcome/Status Banner */}
       <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
         <div>
-          <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">DASHBOARD_OVERVIEW_v2.4</p>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">TERMINAL OVERVIEW</h1>
+          <p className="text-accent text-xs font-bold tracking-widest uppercase mb-1">DASHBOARD_OVERVIEW_v3.0</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-headline tracking-tighter">FACTORY COMMAND</h1>
         </div>
         <div className="text-right">
           <p className="text-[10px] text-muted-foreground uppercase mb-1">System Time (UTC)</p>
@@ -52,56 +54,19 @@ export default function Dashboard() {
         <FinancialOverview />
       </motion.div>
 
-      {/* Middle Row: Geospatial & Visuals */}
-      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3 cyber-panel relative h-[250px] md:h-[350px] lg:h-[450px] rounded-xl overflow-hidden group">
-          <div className="absolute inset-0 z-0">
-            <Image 
-              src="https://picsum.photos/seed/ayma-city/1200/800" 
-              alt="City Masterplan" 
-              fill 
-              className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000"
-              data-ai-hint="city map"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
-          
-          <div className="absolute top-6 start-6 z-20 space-y-2">
-            <Badge className="bg-primary/80 hover:bg-primary backdrop-blur-sm border-none">GEOSPATIAL MASTERPLAN</Badge>
-            <div className="p-3 cyber-panel bg-black/40 text-xs space-y-1">
-              <p className="font-mono flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                LAT: 30.0444° N
-              </p>
-              <p className="font-mono flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                LNG: 31.2357° E
-              </p>
-            </div>
-          </div>
-          
-          {/* Fake UI Overlays on map */}
-          <div className="absolute top-1/4 right-1/4 h-12 w-12 border-2 border-primary rounded-full animate-ping opacity-30 z-20" />
-          <div className="absolute bottom-1/3 left-1/3 h-8 w-8 border-2 border-accent rounded-full animate-pulse opacity-50 z-20" />
-          
-          <div className="absolute bottom-6 start-6 end-6 z-20 flex items-center justify-between">
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <div className="px-4 py-2 cyber-panel bg-black/60">
-                <p className="text-[10px] text-muted-foreground uppercase">Active Nodes</p>
-                <p className="text-xl font-bold font-headline">142/150</p>
-              </div>
-              <div className="px-4 py-2 cyber-panel bg-black/60">
-                <p className="text-[10px] text-muted-foreground uppercase">Grid Health</p>
-                <p className="text-xl font-bold font-headline text-accent">99.4%</p>
-              </div>
-            </div>
-            <div className="px-4 py-2 cyber-panel bg-primary/20 border-primary/40">
-              <p className="text-[10px] text-primary font-bold uppercase">System Status</p>
-              <p className="text-xl font-bold font-headline">NOMINAL</p>
-            </div>
-          </div>
+      {/* Middle Row: OEE + Equipment Health */}
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <OEEGauge />
+        <div className="lg:col-span-2">
+          <EquipmentHealth />
         </div>
-        
+      </motion.div>
+
+      {/* Production + Alerts Row */}
+      <motion.div variants={item} className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3">
+          <ProductionLines />
+        </div>
         <AlertValidationSystem />
       </motion.div>
 
@@ -114,13 +79,19 @@ export default function Dashboard() {
             SYSTEM AUDIT LOG
           </h3>
           <div className="space-y-4">
-            {[1, 2, 3, 4, 5].map((i) => (
+            {[
+              { time: "14:22:01", event: "CNC Mill-01 vibration check passed", protocol: "PREDICTIVE MAINTENANCE" },
+              { time: "13:45:33", event: "Conveyor Line A scheduled downtime initiated", protocol: "MAINTENANCE WINDOW" },
+              { time: "12:10:18", event: "Packaging Robot firmware update deployed", protocol: "OTA UPDATE v2.2.0" },
+              { time: "11:32:44", event: "Air Compressor pressure normalized", protocol: "AUTO-CALIBRATION" },
+              { time: "10:05:12", event: "Shift B production handover completed", protocol: "SHIFT PROTOCOL" },
+            ].map((entry, i) => (
               <div key={i} className="flex items-start justify-between py-2 border-b border-border/50 last:border-0">
                 <div className="flex gap-4">
-                  <span className="text-[10px] font-mono text-muted-foreground">0{i}:12:44</span>
+                  <span className="text-[10px] font-mono text-muted-foreground">{entry.time}</span>
                   <div>
-                    <p className="text-xs font-medium">Node-124 Link Handshake Complete</p>
-                    <p className="text-[10px] text-muted-foreground">Sub-protocol: P2P LIFI MESH-B</p>
+                    <p className="text-xs font-medium">{entry.event}</p>
+                    <p className="text-[10px] text-muted-foreground">{entry.protocol}</p>
                   </div>
                 </div>
                 <Badge variant="outline" className="text-[9px] border-accent/20 text-accent">SUCCESS</Badge>

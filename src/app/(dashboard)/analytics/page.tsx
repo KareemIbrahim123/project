@@ -22,6 +22,16 @@ const nodePerformance = Array.from({ length: 12 }, (_, i) => ({
   packets: 1000 + Math.floor(Math.random() * 5000),
 }));
 
+const oeeHistory = [
+  { day: "Mon", oee: 81.2, target: 85 },
+  { day: "Tue", oee: 83.5, target: 85 },
+  { day: "Wed", oee: 79.8, target: 85 },
+  { day: "Thu", oee: 84.1, target: 85 },
+  { day: "Fri", oee: 86.3, target: 85 },
+  { day: "Sat", oee: 82.7, target: 85 },
+  { day: "Sun", oee: 84.2, target: 85 },
+];
+
 export default function AnalyticsPage() {
   const sensorData = useMemo(() => generateSensorHistory(30), []);
 
@@ -137,6 +147,32 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* OEE Trends */}
+      <Card className="cyber-panel">
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-sm font-medium font-headline tracking-wider flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-accent" />
+              OEE TREND — 7 DAY ROLLING
+            </CardTitle>
+            <Badge variant="outline" className="text-[9px] border-primary/20 text-primary">TARGET: 85%</Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[200px] md:h-[250px]">
+            <ChartContainer config={{ oee: { label: "OEE %", color: "hsl(var(--primary))" }, target: { label: "Target", color: "hsl(var(--accent))" } }}>
+              <LineChart data={oeeHistory}>
+                <XAxis dataKey="day" tick={{ fontSize: 10 }} />
+                <YAxis domain={[70, 100]} tick={{ fontSize: 10 }} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Line type="monotone" dataKey="target" stroke="hsl(var(--accent))" strokeWidth={1} strokeDasharray="4 4" dot={false} />
+                <Line type="monotone" dataKey="oee" stroke="hsl(var(--primary))" strokeWidth={2.5} dot={{ r: 3, fill: "hsl(var(--primary))" }} />
+              </LineChart>
+            </ChartContainer>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Node Performance Table */}
       <Card className="cyber-panel">

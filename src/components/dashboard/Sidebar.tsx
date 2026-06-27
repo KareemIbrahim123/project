@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Map as MapIcon, HelpCircle } from "lucide-react";
+import { LayoutDashboard, Shield, BarChart3, LogOut, Cpu, Database, Factory, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ export function Sidebar() {
     { icon: LayoutDashboard, label: t('mainTerminal'), href: "/" },
     { icon: BarChart3, label: t('analyticsEngine'), href: "/analytics" },
     { icon: Database, label: t('storageVault'), href: "/storage" },
-    { icon: MapIcon, label: t('cityMapping'), href: "/city-mapping" },
+    { icon: Factory, label: t('plantFloor'), href: "/plant-floor" },
     { icon: Shield, label: t('securityAudit'), href: "/security" },
   ];
 
@@ -62,7 +62,7 @@ export function Sidebar() {
               <AvatarFallback>AD</AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-[10px] font-bold tracking-tight">{t('cityAdmin')}</p>
+              <p className="text-[10px] font-bold tracking-tight">{t('plantOperator')}</p>
               <p className="text-[9px] text-accent uppercase">{t('tier1Clearance')}</p>
             </div>
           </div>
